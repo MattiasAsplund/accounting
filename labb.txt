@@ -1,0 +1,172 @@
+Microsoft (R) Roslyn C# Compiler version 2.4.0.62216
+Loading context from 'CSharpInteractive.rsp'.
+Type "#help" for more information.
+> var aDate = DateTime.Now
+.     ;
+> Math.Pow(3,2)
+9
+> Math.Pow(3,2)
+9
+> class Person {
+.     public void Jump()
+.     {
+.         Console.WriteLine("Jump");
+.     }
+. }
+> var mattias = new Person();
+> mattias.Jump()
+Jump
+> class Faktura {
+.     public Person Kund;
+.     public string Street;
+.     public decimal Belopp;
+. }
+> var enFaktura = new Faktura();
+> enFaktura.Kund = mattias;
+> enFaktura.Street = "Fågelvägen 32, 135 53  Tyresö";
+> enFaktura.Belopp = 1000;
+> enFaktura
+Submission#6.Faktura { Belopp=1000, Kund=Submission#3.Person { }, Street="Fågelvägen 32, 135 53  Tyresö" }
+> class Faktura {
+.     public Faktura(Person kund)
+.     {
+.         this.kund = kund;
+.     }
+.     private Person kund;
+. }
+> var nyFaktura = new Faktura(mattias);
+> var okändFaktura = new Faktura();
+(1,24): error CS7036: There is no argument given that corresponds to the required formal parameter 'kund' of 'Faktura.Faktura(Person)'
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> 
+> class Product
+. {
+.     public Product(string name, decimal price)
+.     {
+.         this.Name = name;
+.         this.Price = price;
+.     }
+.     internal string Name;
+.     internal decimal Price;
+. }
+> var teddy = new Product("Teddybjörnen Fredriksson", 79);
+> teddy
+Submission#30.Product { Name="Teddybjörnen Fredriksson", Price=79 }
+> class BeställningsRad
+. {
+.     public BeställningsRad(Product product, int antal)
+.     {
+.         Product = product;
+.         Antal = antal;
+.     }
+.     internal Product Product;
+.     internal int Antal;
+. }
+> var enRad = new BeställningsRad(teddy, 2);
+> enRad
+Submission#33.BeställningsRad { Antal=2, Product=Submission#30.Product { Name="Teddybjörnen Fredriksson", Price=79 } }
+> class Beställning
+. {
+.     public Beställning(Person person)
+.     {
+.         Person = person;
+.     }
+.     public void LäggtillRad(BeställningsRad rad)
+.     {
+.         Rader.Add(rad);
+.     }
+.     internal Person Person;
+.     private List<BeställningsRad> Rader = new List<BeställningsRad>();
+. }
+> var enBeställning = new Beställning(mattias);
+> enBeställning
+Submission#36.Beställning { Person=Submission#3.Person { } }
+> class Beställning
+. {
+.     public Beställning(Person person)
+.     {
+.         Person = person;
+.     }
+.     public void LäggtillRad(BeställningsRad rad)
+.     {
+.         Rader.Add(rad);
+.     }
+.     internal Person Person;
+.     private List<BeställningsRad> Rader = new List<BeställningsRad>();
+. }
+> enRad
+Submission#33.BeställningsRad { Antal=2, Product=Submission#30.Product { Name="Teddybjörnen Fredriksson", Price=79 } }
+> enBeställning
+Submission#36.Beställning { Person=Submission#3.Person { } }
+> enBeställning.LäggtillRad(rad);
+(1,27): error CS0103: The name 'rad' does not exist in the current context
+> enBeställning.LäggtillRad(enRad);
+> enBeställning
+Submission#36.Beställning { Person=Submission#3.Person { } }
+> class Beställning
+. {
+.     public Beställning(Person person)
+.     {
+.         Person = person;
+.     }
+.     public void LäggtillRad(BeställningsRad rad)
+.     {
+.         Rader.Add(rad);
+.     }
+.     internal Person Person;
+.     internal List<BeställningsRad> Rader = new List<BeställningsRad>();
+. }
+> var andraBeställningen = new Beställning(mattias);
+> andraBeställningen.LäggtillRad(enRad);
+> andraBeställningen
+Submission#45.Beställning { Person=Submission#3.Person { }, Rader=List<Submission#33.BeställningsRad>(1) { Submission#33.BeställningsRad { Antal=2, Product=Submission#30.Product { Name="Teddybjörnen Fredriksson", Price=79 } } } }
+> 
+
+class Beställning
+. {
+.     public Beställning(Person person)
+.     {
+.         Person = person;
+.     }
+.     public void LäggtillRad(BeställningsRad rad)
+.     {
+.         Rader.Add(rad);
+.     }
+.     internal Person Person;
+.     internal List<BeställningsRad> Rader = new List<BeställningsRad>();
+. }
+> var andraBeställningen = new Beställning(mattias);
+> andraBeställningen.LäggtillRad(enRad);
+> andraBeställningen
+Submission#45.Beställning { Person=Submission#3.Person { }, Rader=List<Submission#33.BeställningsRad>(1) { Submission#33.BeställningsRad { Antal=2, Product=Submission#30.Product { Name="Teddybjörnen Fredriksson", Price=79 } } } }
+> class Accounting
+. {
+.     public static Faktura GenereraFaktura(Beställning beställning)
+.     {
+.         var enFaktura = new Faktura(beställning.Person);
+.         Console.WriteLine(beställning.Rader.Sum(rad => rad.Antal * rad.Product.Price));
+.         return enFaktura;
+.     }
+. }
+> var enNyFaktura = Accounting.GenereraFaktura(enBeställning);
+(1,46): error CS1503: Argument 1: cannot convert from 'Beställning [R*bdb1a408-56fc-4af9-b1f5-e2d019861903#1-36, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]' to 'Beställning [R*bdb1a408-56fc-4af9-b1f5-e2d019861903#1-45, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]'
+> var enNyBeställning = new Beställning(mattias);
+> var enNyRad = new BeställningsRad(teddy, 3);
+> enNyBeställning.LäggtillRad(enNyRad);
+> var enNyFaktura = Accounting.GenereraFaktura(enNyBeställning);
+237
+> 
+
